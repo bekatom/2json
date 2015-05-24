@@ -1,3 +1,0 @@
-alasql.fn.myfn2 = function(n){
-	return n*n*n;
-};
