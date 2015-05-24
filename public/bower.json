@@ -1,0 +1,16 @@
+{
+  "name": "2json",
+  "version": "0.1",
+  "authors": [
+    "vobi team"
+  ],
+  "description": "Data 2 json",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
