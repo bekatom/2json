@@ -4,9 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var multer  = require('multer');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+
 
 var app = express();
 
@@ -32,8 +34,25 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
+// multer setting
+var done=false;
+// http://codeforgeek.com/2014/11/file-uploads-using-node-js/
+app.use(multer({ dest: './uploads/',
+ rename: function (fieldname, filename) {
+    return filename+Date.now();
+  },
+onFileUploadStart: function (file) {
+  console.log(file.originalname + ' is starting ...')
+},
+onFileUploadComplete: function (file) {
+  console.log(file.fieldname + ' uploaded to  ' + file.path)
+  done=true;
+}
+}));
 
+
+// end of multer setting
+// error handlers
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
