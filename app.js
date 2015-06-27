@@ -56,8 +56,9 @@ app.post('/api/photo',function(req,res){
 
 app.post('/api/xlsx',function(req,res){
   if(done==true){
-    console.log(req.files);
-    res.end("Excel File uploaded.");
+    console.log(req.files.file.name); // uploaded file name
+    //res.end("Excel File uploaded.");
+    res.render('index.html', { filename: req.files.file.name });
   }
 });
 

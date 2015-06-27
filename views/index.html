@@ -28,25 +28,49 @@
                   <input class="btn btn-lg btn-success" type="submit", value="Upload Excel File", name="submit">
              </div>
            </div>
+      </form>
 
-
-                <!-- <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p> -->
-          </form>
-
+        <div class="row">
+              {{ filename }}
+        </div>
 
     </div>
 
+      {% if filename %}
+      <div class="jumbotron">
+         <h2> Results : </h2>
+          <div class="row" id="results">
 
+          </div>
 
-
-
-
+      </div>
+      {% endif %}
 
   </form>
 
 </div>
+{% endblock %}
 
+{% block scripts %}
+  {% if filename %}
+    <script type="text/javascript">
 
+    $(document).ready(function() {
+
+      url = '/uploads/' + '{{ filename }}';
+      console.log(url);
+      query = "select * from xlsx('" + url + "' ,{headers:true})";
+
+      alasql(query, [], function (result) {
+
+          console.log(result);
+          var data = JSON.stringify(result);
+          $("#results").html(data);
+      });
+
+    });
+    </script>
+  {% endif %}
 
 
 {% endblock %}
