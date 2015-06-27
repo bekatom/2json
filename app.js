@@ -24,20 +24,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+//app.use('/', routes);
+//app.use('/users', users);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+
 
 // multer setting
 var done=false;
 // http://codeforgeek.com/2014/11/file-uploads-using-node-js/
-app.use(multer({ dest: './uploads/',
+app.use(multer({ dest: path.join(__dirname, 'public/uploads'),
  rename: function (fieldname, filename) {
     return filename+Date.now();
   },
@@ -50,6 +45,35 @@ onFileUploadComplete: function (file) {
 }
 }));
 
+
+app.get('/',function(req,res){
+
+    res.render('index.html', { title: '2 Json ' });
+    //res.send('dfdf');
+
+});
+
+app.post('/api/photo',function(req,res){
+  if(done==true){
+    console.log(req.files);
+    res.end("File uploaded.");
+  }
+});
+
+
+app.post('/api/xlsx',function(req,res){
+  if(done==true){
+    console.log(req.files);
+    res.end("Excel File uploaded.");
+  }
+});
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 // end of multer setting
 // error handlers
