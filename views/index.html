@@ -2,14 +2,51 @@
 
 {% block content %}
 
-<h1> 2json.net </h1>
+<div class="container">
 
-<form id="uploadForm" enctype="multipart/form-data", action="/api/xlsx", method="post">
+    <div class="header clearfix">
+           <nav>
+             <ul class="nav nav-pills pull-right">
+               <li role="presentation" class="active"><a href="#">Home</a></li>
+               <li role="presentation"><a href="#">About</a></li>
+               <li role="presentation"><a href="#">Contact</a></li>
+             </ul>
+           </nav>
+           <h3 class="text-muted">2Json.net</h3>
+    </div>
 
-  <input type="file" name="file" value="">
-  <input type="submit", value="Upload Excel File", name="submit">
+    <div class="jumbotron">
+          <h2>Convert Excel To JSON</h2>
+          <form class="form-horizontal" id="uploadForm" enctype="multipart/form-data", action="/api/xlsx", method="post">
+             <div class="form-group">
+              <div class="col-sm-10">
+                <input class="form-control" type="file" name="file" value="">
+              </div>
+            </div>
+            <div class="form-group">
+             <div class="col-sm-10">
+                  <input class="btn btn-lg btn-success" type="submit", value="Upload Excel File", name="submit">
+             </div>
+           </div>
 
 
-</form>
+                <!-- <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p> -->
+          </form>
+
+
+    </div>
+
+
+
+
+
+
+
+  </form>
+
+</div>
+
+
+
 
 {% endblock %}
