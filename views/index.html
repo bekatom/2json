@@ -39,9 +39,9 @@
       {% if filename %}
       <div class="jumbotron">
          <h2> Results : </h2>
-          <div class="row" id="results">
-
-          </div>
+          <button type="button" class="btn btn-primary btn-xs" id="copy">Copy</button>
+          <a target="_blank" href="http://jsoneditoronline.org/" class="btn btn-primary btn-xs" id="json-editor">Json editor</a>
+          <div class="row" id="results"></div>
 
       </div>
       {% endif %}
@@ -57,15 +57,12 @@
 
     $(document).ready(function() {
 
-      url = '/uploads/' + '{{ filename }}';
-      console.log(url);
-      query = "select * from xlsx('" + url + "' ,{headers:true})";
-
-      alasql(query, [], function (result) {
-
-          console.log(result);
-          var data = JSON.stringify(result);
+      excel2Json('/uploads/' + '{{ filename }}',function(data){
           $("#results").html(data);
+      });
+
+      $("#copy").click(function(event) {
+          copyToClipboard('#results');
       });
 
     });
