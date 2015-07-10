@@ -10,8 +10,10 @@ Excel to json
 from root directory where packages.json is located .
 ```sh
 npm install
+```
 
 Install bower dependencies from /public folder
 
 ```sh
   bower install
+```
