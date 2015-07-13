@@ -7,6 +7,11 @@ function copyToClipboard(element) {
   $("#temp").remove();
 }
 
+function openInEditor(element) {
+  var json = encodeURI($(element).text());
+  window.open("http://jsoneditoronline.org/?json=" + json, "_blank");
+}
+
 
 // convert excell file to json data
 function excel2Json(file, callback) {

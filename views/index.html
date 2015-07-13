@@ -40,7 +40,7 @@
       <div class="jumbotron">
          <h2> Results : </h2>
           <button type="button" class="btn btn-primary btn-xs" id="copy">Copy</button>
-          <a target="_blank" href="http://jsoneditoronline.org/" class="btn btn-primary btn-xs" id="json-editor">Json editor</a>
+          <button type="button" class="btn btn-primary btn-xs" id="json-editor">Json editor</button>
           <div class="row" id="results"></div>
 
       </div>
@@ -64,6 +64,11 @@
       $("#copy").click(function(event) {
           copyToClipboard('#results');
       });
+      
+      $("#json-editor").click(function(event) {
+          openInEditor('#results');
+      });
+     
 
     });
     </script>
