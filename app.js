@@ -5,16 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multer  = require('multer');
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
+var swig  = require('swig');
 
 
 var app = express();
-
+app.engine('html', swig.renderFile);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'swig');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -24,20 +22,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
 // multer setting
 var done=false;
 // http://codeforgeek.com/2014/11/file-uploads-using-node-js/
-app.use(multer({ dest: './uploads/',
+app.use(multer({ dest: path.join(__dirname, 'public/uploads'),
  rename: function (fieldname, filename) {
     return filename+Date.now();
   },
@@ -51,6 +39,36 @@ onFileUploadComplete: function (file) {
 }));
 
 
+app.get('/',function(req,res){
+
+    res.render('index.html', { title: '2 Json ' });
+    //res.send('dfdf');
+
+});
+
+app.post('/api/photo',function(req,res){
+  if(done==true){
+    console.log(req.files);
+    res.end("File uploaded.");
+  }
+});
+
+
+app.post('/api/xlsx',function(req,res){
+  if(done==true){
+    console.log(req.files.file.name); // uploaded file name
+    //res.end("Excel File uploaded.");
+    res.render('index.html', { filename: req.files.file.name });
+  }
+});
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
 // end of multer setting
 // error handlers
 // development error handler
@@ -58,7 +76,7 @@ onFileUploadComplete: function (file) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render('error.html', {
       message: err.message,
       error: err
     });
@@ -69,7 +87,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.render('error.html', {
     message: err.message,
     error: {}
   });
