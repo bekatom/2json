@@ -3,3 +3,4 @@ node_modules/*
 public/uploads/*
 public/bower_components/*
 public/bower_components/
+.idea/.name
